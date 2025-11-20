@@ -1,24 +1,28 @@
-import { useEffect, useState } from "react";
-import type { Product } from "../models/product";
-import Catalog from "../../features/catalog/Catalog";
+import {useState } from "react";
 import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Navbar from "./navbar";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [darkMode,setDarkMode]= useState(false);
+  const [darkMode,setDarkMode]= useState(true);
 
   const lightTheme = createTheme({
+    typography:{
+      fontFamily: "'Manrope', sans-serif",
+    },
     palette: {
       mode : 'light',
       primary:{
-        main: '#c4948a ',
+        main: '#c4948a',
         light: '#d7ada5',
         dark:'#a1756b',
         contrastText: '#ffffff',
       },
       secondary:{
-        main: '#814043', 
+        main: '#814043',
+      },
+      success:{
+        main:'#a11132',
       },
       background:{
         default:'#fff4ef',
@@ -26,23 +30,30 @@ function App() {
       },
       text:{
         primary:'#140f0e',
-        secondary:'#3b2c29'
+        secondary:'#643c34'
+
       },
     },
   });
-  
 
   const darkTheme = createTheme({
+    typography:{
+      fontFamily: "'Manrope', sans-serif",
+    },
+
     palette: {
       mode : 'dark',
       primary:{
-        main: '#c4948a ',
+        main: '#c4948a',
         light: '#d7ada5',
         dark:'#a1756b',
         contrastText: '#000000',
       },
       secondary:{
         main: '#d4bfbf', 
+      },
+       success:{
+        main:'#a11132',
       },
       background:{
         default:'#1a1414',
@@ -60,10 +71,6 @@ const toggleDarkMode = () => {
   setDarkMode(!darkMode);
 };
 
-  useEffect(() => {
-    fetch("https://localhost:5001/api/products") //get database from api
-      .then((response) => response.json())
-      .then((data) => setProducts(data))}, []);
 
   return (
 <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -79,7 +86,7 @@ const toggleDarkMode = () => {
   
   
     <Container maxWidth='xl' sx=  {{mt: 8}}>
-      <Catalog products={products} />
+      <Outlet/>
     </Container>
   </Box>
 
