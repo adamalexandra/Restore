@@ -10,7 +10,6 @@ import { router } from './app/routes/Routes.tsx';
 import { Provider } from 'react-redux';
 import  {store} from './app/store/store';
 import { ToastContainer } from 'react-toastify';
-// import 'react-tostify/dist/ReactTostify.css';
 
 
 

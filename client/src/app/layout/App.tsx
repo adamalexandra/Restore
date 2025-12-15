@@ -1,4 +1,5 @@
-import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, Container, CssBaseline, ThemeProvider } from "@mui/material";
+import {createTheme} from "@mui/material/styles";
 import Navbar from "./navbar";
 import { Outlet } from "react-router-dom";
 import { useAppSelector } from "../store/store";
@@ -23,8 +24,11 @@ function App() {
       secondary:{
         main: '#814043',
       },
+      error:{
+        main:'#a11132'
+      },
       success:{
-        main:'#a11132',
+        main:'#1c7b73ff',
       },
       background:{
         default:'#fff4ef',
@@ -54,8 +58,11 @@ function App() {
       secondary:{
         main: '#d4bfbf', 
       },
-       success:{
-        main:'#a11132',
+       error:{
+        main:'#a11132'
+      },
+      success:{
+        main:'#1c7b73ff'
       },
       background:{
         default:'#1a1414',

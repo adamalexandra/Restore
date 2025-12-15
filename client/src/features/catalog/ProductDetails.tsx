@@ -2,18 +2,44 @@ import { useParams } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 import { Button, Divider, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { useFetchProductDetailsQuery } from "./catalogApi";
+import { useAddBasketItemMutation, useFetchBasketQuery, useRemoveBasketItemMutation } from "../basket/basketApi";
+import { useEffect, useState, type ChangeEvent } from "react";
 
 export default function ProductDetail() {
   const {id} = useParams();
- 
+  const [removeBasketItem]= useRemoveBasketItemMutation();
+  const [addBasketItem]= useAddBasketItemMutation();
+  const{data:basket}= useFetchBasketQuery();
+  const item = basket?.items.find(x => x.productId === +id!); 
+  const[quantity, setQuantity]=useState(0); 
+  
+  useEffect(()=>{
+    if (item) setQuantity(item.quantity);
+  }, [item]);
+
   const {data: product, isLoading} = useFetchProductDetailsQuery(id? +id: 0) //convert id(string) into number
 
   if (!product || isLoading) return <div>Loading...</div>
 
+    const handleUptadeBasket =() => {
+    const updatedQuantity = item ? Math.abs(quantity - item.quantity):quantity //if - remove
+    if (!item || quantity > item.quantity) {
+      addBasketItem({product, quantity: updatedQuantity})
+    } else{
+      removeBasketItem ({productId: product.id, quantity: updatedQuantity})
+    }
+  }
+
+  const handleImputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = +event.currentTarget.value;
+
+    if (value>=0) setQuantity(value)
+  }
+
   const productDetails =[
     {label: 'Name', value: product.name},
     {label: 'Description', value: product.description},
-    {label: 'Price', value: `€${product.price.toFixed(2)}`},
+    {label: 'Price', value: `€${(product.price/100).toFixed(2)}`},
     {label: 'Brand', value: product.brand},
     {label: 'Type', value: product.type},
     {label: 'Quantity in Stock', value: product.quantityInStock},
@@ -28,7 +54,7 @@ export default function ProductDetail() {
       <Grid size={6}>
         <Typography variant="h3">{product?.name}</Typography>
         <Divider sx={{mb:2}}/>
-        <Typography variant="h4" color='secondary'>€{(product.price).toFixed(2)}</Typography>
+        <Typography variant="h4" color='secondary'>€{(product.price/100).toFixed(2)}</Typography>
         <TableContainer>
           <Table sx={{
             '& td':{fontSize:'1rem'}
@@ -52,18 +78,20 @@ export default function ProductDetail() {
               type="number"
               label="Quantity in Cart"
               fullWidth
-              defaultValue={1}
+              value={quantity}
+              onChange={handleImputChange}
               />
               </Grid>
           <Grid size={6}>
             <Button
-            
-            sx ={{height:'55px', fontWeight: 650}}
+            onClick={handleUptadeBasket}
+            disabled={quantity === item?.quantity || !item && quantity === 0}
+            sx ={{height:'55px', fontWeight:'650'}}
             color="primary" 
             size="large" 
             variant="contained" 
             fullWidth>
-              Add to Cart
+             {item? 'Update quantity' : 'Add to cart'}
             </Button>
           </Grid>
         </Grid>

@@ -25,7 +25,7 @@ export default function AboutPage() {
   }
   return (
     <Container maxWidth ='lg'>
-      <Typography gutterBottom variant="h3"> Errors for testing</Typography>
+      <Typography gutterBottom variant="h4"> Errors for testing</Typography>
       <ButtonGroup fullWidth>
         <Button variant="contained" onClick={()=> trigger400Error()
           .catch(err => console.log(err))}>

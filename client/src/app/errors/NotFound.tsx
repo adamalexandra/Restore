@@ -15,7 +15,7 @@ export default function NotFound() {
       }}
     >
       <SearchOff sx={{fontSize:100}} color="primary" />
-      <Typography gutterBottom variant="h3">
+      <Typography gutterBottom variant="h4">
         Oops - we could not find what you were looking for
       </Typography>
       <Button fullWidth component={Link} to='/catalog'>
