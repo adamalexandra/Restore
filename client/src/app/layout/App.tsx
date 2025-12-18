@@ -1,7 +1,7 @@
 import { Box, Container, CssBaseline, ThemeProvider } from "@mui/material";
 import {createTheme} from "@mui/material/styles";
 import Navbar from "./navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { useAppSelector } from "../store/store";
 
 
@@ -79,6 +79,7 @@ function App() {
 
   return (
 <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+  <ScrollRestoration />
   <CssBaseline/>
   <Navbar/>
   <Box

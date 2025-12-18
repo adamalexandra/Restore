@@ -19,6 +19,8 @@ const rightLinks=[
 const navStyles = {
   color: 'inherit',
   typography: 'h6',
+  letterSpacing: '0.07rem',
+  fontWeight: '550',
   textDecoration: 'none',
   '&:hover': { color: 'text.secondary' },
   '&.active': { color: 'secondary.main' }
@@ -36,8 +38,9 @@ const itemCount = basket?.items.reduce((sum, item)=>sum+item.quantity,0) || 0
     <Toolbar sx={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
       <Box display='flex' alignItems='center'>
         <Typography component={NavLink} sx={navStyles} to='/' variant="h6">e-CANDLE</Typography>
-        <IconButton onClick={() => dispatch(setDarkMode())}>
-            {darkMode ? <DarkMode /> : <LightMode sx={{ color: '#f2e7e7' }} />}
+        <IconButton 
+        onClick={() => dispatch(setDarkMode())}>
+            {darkMode ? <DarkMode /> : <LightMode sx={{ color: '#f2e7e7'}}/>}
         </IconButton>
       </Box>
 
