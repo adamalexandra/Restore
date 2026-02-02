@@ -75,7 +75,9 @@ export const accountApi = createApi({
       onQueryStarted:async(address,{ dispatch,queryFulfilled}) => {
         const patchResult = dispatch(
           accountApi.util.updateQueryData('fetchAddress', undefined, (draft) => {
-            Object.assign(draft, {...address})
+            if (draft) {
+              Object.assign(draft, {...address})
+            }
           })
         );
 

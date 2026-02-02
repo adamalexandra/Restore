@@ -19,7 +19,7 @@ public class DbInitializer
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
       ?? throw new InvalidOperationException("Failed to retrieve user manager");
     
-    SeedDataAsync(context, userManager);
+    SeedDataAsync(context, userManager).GetAwaiter().GetResult();
   }
 
   private static void SeedData(StoreContext context, object userManger)
@@ -62,7 +62,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/cinnamonroll.png",
         Brand = "CandleLand",
         Type = "Tasty",
-        QuantityInStock = 18
+        QuantityInStock = 98
       },
 
       new Product
@@ -73,7 +73,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/cookiedough.png",
         Brand = "CandleLand",
         Type = "Tasty",
-        QuantityInStock = 23
+        QuantityInStock = 83
       },
 
       new Product
@@ -84,7 +84,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/flowergarden.png",
         Brand = "HouseOfCandles",
         Type = "Floral",
-        QuantityInStock = 32
+        QuantityInStock = 92
       },
 
       new Product
@@ -95,7 +95,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/jasmine.png",
         Brand = "HouseOfCandles",
         Type = "Floral",
-        QuantityInStock = 12
+        QuantityInStock = 92
       },
 
       new Product
@@ -106,7 +106,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/blackorchid.png",
         Brand = "HouseOfCandles",
         Type = "Floral",
-        QuantityInStock = 11
+        QuantityInStock = 91
       },
 
       new Product
@@ -117,7 +117,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/coconut.png",
         Brand = "CandleLand",
         Type = "Tasty",
-        QuantityInStock = 25
+        QuantityInStock = 95
       },
 
       new Product
@@ -139,7 +139,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/lavender.png",
         Brand = "HouseOfCandles",
         Type = "Floral",
-        QuantityInStock = 16
+        QuantityInStock = 96
       },
 
       new Product
@@ -150,7 +150,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/oceandive.png",
         Brand = "CandleLand",
         Type = "Fresh",
-        QuantityInStock = 38
+        QuantityInStock = 98
       },
 
       new Product
@@ -161,7 +161,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/cottoncandy.png",
         Brand = "HouseOfCandles",
         Type = "Fresh",
-        QuantityInStock = 3
+        QuantityInStock = 93
       },
 
       new Product
@@ -172,7 +172,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/applepie.png",
         Brand = "CandleLand",
         Type = "Tasty",
-        QuantityInStock = 14
+        QuantityInStock = 94
       },
 
       new Product
@@ -183,7 +183,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/rosepetals.png",
         Brand = "HouseOfCandles",
         Type = "Floral",
-        QuantityInStock = 15
+        QuantityInStock = 95
       },
 
       new Product
@@ -194,7 +194,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/croissant.png",
         Brand = "CandleLand",
         Type = "Tasty",
-        QuantityInStock = 17
+        QuantityInStock = 97
       },
 
       new Product
@@ -205,7 +205,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/freshlaundry.png",
         Brand = "CandleLand",
         Type = "Fresh",
-        QuantityInStock = 22
+        QuantityInStock = 92
       },
 
       new Product
@@ -216,7 +216,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/candlepot.png",
         Brand = "CandleLab",
         Type = "DIY",
-        QuantityInStock = 4
+        QuantityInStock = 94
       },
 
       new Product
@@ -227,7 +227,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/woodwisk.png",
         Brand = "CandleLab",
         Type = "DIY",
-        QuantityInStock = 45
+        QuantityInStock = 95
       },
 
       new Product
@@ -238,7 +238,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/candlewax.png",
         Brand = "CandleLand",
         Type = "DIY",
-        QuantityInStock = 14
+        QuantityInStock = 94
       },
 
       new Product
@@ -249,7 +249,7 @@ public class DbInitializer
         PictureUrl = "/images-candles/product-candles/essentialoil.png",
         Brand = "CandleLab",
         Type = "DIY",
-        QuantityInStock = 11
+        QuantityInStock = 91
       }
 
     };

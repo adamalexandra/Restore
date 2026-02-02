@@ -13,7 +13,7 @@ export default function Review({confirmationToken}: Props) {
     if (!confirmationToken?.shipping) return '';
     const {name,address} = confirmationToken.shipping;
     return `${name}, ${address?.line1}, ${address?.city}, 
-      ${address?.postal_code}, ${address?.country} `//state
+      ${address?.postal_code}, ${address?.country} `
   }
 
   const paymentString =() => {

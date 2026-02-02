@@ -7,17 +7,7 @@ export type Basket = {
   paymentIntentId?: string
 }
 
-export class Item {
-constructor (product: Product, quantity: number) {
-  this.productId = product.id;
-  this.name = product.name;
-  this.price = product.price;
-  this.pictureUrl = product.pictureUrl;
-  this.brand = product.brand;
-  this.type = product.type;
-  this.quantity = quantity;
-}
-
+export type Item = {
   productId: number
   name: string
   price: number

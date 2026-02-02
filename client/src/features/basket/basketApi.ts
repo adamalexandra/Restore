@@ -1,11 +1,23 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithErrorHandling } from "../../app/api/baseApi";
-import { Item, type Basket } from "../../app/models/Basket";
+import { type Item, type Basket } from "../../app/models/Basket";
 import type { Product } from "../../app/models/product";
 import Cookies from 'js-cookie';
 
 function isBasketItem(product: Product | Item): product is Item{
   return (product as Item).quantity !== undefined;
+}
+
+function createItemFromProduct(product: Product, quantity: number): Item {
+  return {
+    productId: product.id,
+    name: product.name,
+    price: product.price,
+    pictureUrl: product.pictureUrl,
+    brand: product.brand,
+    type: product.type,
+    quantity: quantity
+  };
 }
 
 export const basketApi = createApi({
@@ -38,7 +50,7 @@ export const basketApi = createApi({
             const existingItem = draft.items.find(item => item.productId === productId);
             if (existingItem) existingItem.quantity += quantity;
             else draft.items.push(isBasketItem(product)
-              ?product:new Item(product, quantity));
+              ? product : createItemFromProduct(product, quantity));
             }
           })
         )
@@ -84,7 +96,8 @@ export const basketApi = createApi({
       onQueryStarted: async (_, {dispatch}) => {
         dispatch(
           basketApi.util.updateQueryData('fetchBasket', undefined, (draft)=>{
-            draft.items=[]
+            draft.items=[];
+            draft.basketId='';
           })
         );
         Cookies.remove('basketId'); //remove cookie 

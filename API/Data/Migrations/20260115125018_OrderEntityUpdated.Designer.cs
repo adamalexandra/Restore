@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20260115125018_OrderEntityUpdated")]
+    partial class OrderEntityUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.11");
@@ -36,6 +39,7 @@ namespace API.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Line2")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -438,12 +442,10 @@ namespace API.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("ExpMonth")
-                                .HasColumnType("INTEGER")
-                                .HasAnnotation("Relational:JsonPropertyName", "exp_month");
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("ExpYear")
-                                .HasColumnType("INTEGER")
-                                .HasAnnotation("Relational:JsonPropertyName", "exp_year");
+                                .HasColumnType("INTEGER");
 
                             b1.Property<int>("Last4")
                                 .HasColumnType("INTEGER");
@@ -470,6 +472,10 @@ namespace API.Data.Migrations
                                 .HasColumnType("TEXT");
 
                             b1.Property<string>("Line1")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Line2")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
