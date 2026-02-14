@@ -3,7 +3,6 @@ import { AddressElement, PaymentElement, useElements, useStripe } from "@stripe/
 import {useState, useEffect} from "react"
 import Review from "./Review";
 import { useFetchAddressQuery, useUpdateUserAddressMutation } from "../account/accountApi";
-import type { Address } from "../../app/models/user";
 import { useBasket } from "../../lib/hooks/useBasket";
 import { currencyFormat } from "../../lib/util";
 import { toast } from "react-toastify";
@@ -19,7 +18,7 @@ export default function CheckoutStepper() {
   const [createOrder]=useCreateOrderMutation();
   const {basket} = useBasket();
   const {data, isLoading} = useFetchAddressQuery();
-  const {name, ...restAddress} = (data || {}) as Address;
+  //const {name, ...restAddress} = (data || {}) as Address;
   const[updateAddress]=useUpdateUserAddressMutation();
   const[saveAddressChecked, setSaveAddressChecked]=useState(false);
   const elements = useElements();
@@ -33,6 +32,10 @@ export default function CheckoutStepper() {
   const total = subtotal + deliveryFee;
   const [confirmationToken, setConfirmationToken] = useState<ConfirmationToken | null>(null);
 
+  let name, restAddress;
+  if (data) {
+    ({name,...restAddress} = data);
+  }
   // Mark payment element as ready when elements exist
   useEffect(() => {
     if (elements && activeStep === 1) {
