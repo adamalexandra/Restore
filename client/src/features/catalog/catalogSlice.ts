@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { ProductParams } from "../../app/models/productParams";
 
-
 const initialState: ProductParams={
   pageNumber: 1,
   pageSize: 8,
@@ -10,8 +9,6 @@ const initialState: ProductParams={
   searchTerm: '',
   orderBy:'name'
 }
-
-
 
 export const catalogSlice = createSlice({
   name:'catalogSlice',
