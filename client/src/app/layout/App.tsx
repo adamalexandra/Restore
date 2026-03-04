@@ -4,8 +4,6 @@ import Navbar from "./navbar";
 import { Outlet, ScrollRestoration } from "react-router-dom";
 import { useAppSelector } from "../store/store";
 
-
-
 function App() {
   const {darkMode}= useAppSelector(state => state.ui);
 
