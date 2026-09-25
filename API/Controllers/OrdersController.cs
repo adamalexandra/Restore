@@ -18,6 +18,7 @@ public class OrdersController(StoreContext context, DiscountService discountServ
     var orders = await context.Orders
     .ProjectToDto()
     .Where(x => x.BuyerEmail == User.GetUsername())
+    .OrderByDescending(x => x.OrderDate) //newest first
     .ToListAsync();
 
     return orders;

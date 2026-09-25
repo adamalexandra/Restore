@@ -143,15 +143,20 @@ export default function ProfilePage() {
                     <Box
                       key={order.id}
                       sx={{
-                        border: "1px solid #ddd",
+                        border: 1,
+                        borderColor: 'divider',
                         borderRadius: 2,
                         p: 1,
-                        backgroundColor: "#fafafa"
+                        bgcolor: 'background.default'
                       }}
                     >
                       <Typography fontWeight={600} variant="body2">Order #{order.id}</Typography>
-                      <Typography variant="caption">Date: {new Date(order.orderDate).toLocaleDateString()}</Typography>
-                      <Typography variant="caption">Total: €{(order.total / 100).toFixed(2)}</Typography>
+                      <Typography variant="caption" display="block" color="text.secondary">
+                        Date: {new Date(order.orderDate).toLocaleDateString()}
+                      </Typography>
+                      <Typography variant="caption" display="block" color="text.secondary">
+                        Total: €{(order.total / 100).toFixed(2)}
+                      </Typography>
                     </Box>
                   ))}
                 </Stack>
