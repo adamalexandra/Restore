@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithErrorHandling } from "../../app/api/baseApi";
 import type { Address, User } from "../../app/models/user";
+import type { Order } from "../../app/models/order";
 import type { LoginSchema } from "../../lib/schemas/loginSchema";
 import { router } from "../../app/routes/Routes";
 import { toast } from "react-toastify";
@@ -18,6 +19,7 @@ export const accountApi = createApi({
           body:creds
         }
       },
+    
       async onQueryStarted(_, {dispatch, queryFulfilled}) {
         try {
           await queryFulfilled
@@ -26,6 +28,9 @@ export const accountApi = createApi({
           console.log(error);
         }
       }
+    }),
+    getMyOrders: builder.query<Order[], void>({
+      query: () => 'orders',
     }),
     register: builder.mutation<void,object>({
       query:(creds)=>{
@@ -88,11 +93,33 @@ export const accountApi = createApi({
           console.log(error);
         }
       }
+    }),
+    userProfile: builder.query<{ name: string; email: string; address?: Address }, void>({
+      query: () => 'account/profile',
+      providesTags: ['UserInfo']
+    }),
+    updateUserProfile: builder.mutation<void, { name: string; address: Address }>({
+      query: (profile) => ({
+        url: 'account/profile',
+        method: 'PUT',
+        body: profile
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(accountApi.util.invalidateTags(['UserInfo']));
+          toast.success('Profile updated!');
+        } catch (error) {
+          console.log(error);
+          toast.error('Failed to update profile.');
+        }
+      }
     })
   })
 });
 
 export const {useLoginMutation, useRegisterMutation, 
   useLogoutMutation, useUserInfoQuery, useLazyUserInfoQuery, 
-  useFetchAddressQuery, useUpdateUserAddressMutation}
+  useFetchAddressQuery, useUpdateUserAddressMutation, 
+  useUserProfileQuery, useUpdateUserProfileMutation,useGetMyOrdersQuery}
   = accountApi;

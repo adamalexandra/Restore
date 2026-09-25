@@ -16,7 +16,6 @@ const steps =['Address', 'Payment', 'Review'];
 export default function CheckoutStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [createOrder]=useCreateOrderMutation();
-  const {basket} = useBasket();
   const {data, isLoading} = useFetchAddressQuery();
   //const {name, ...restAddress} = (data || {}) as Address;
   const[updateAddress]=useUpdateUserAddressMutation();
@@ -27,15 +26,14 @@ export default function CheckoutStepper() {
   const [paymentComplete, setPaymentComplete] = useState(false);
   const [paymentReady, setPaymentReady] = useState(false);
   const [submitting, setSubmitting] = useState (false);
-  const {subtotal, deliveryFee, clearBasket} = useBasket();
+  const {basket, total, clearBasket} = useBasket();
   const navigate = useNavigate();
-  const total = subtotal + deliveryFee;
   const [confirmationToken, setConfirmationToken] = useState<ConfirmationToken | null>(null);
 
-  let name, restAddress;
-  if (data) {
-    ({name,...restAddress} = data);
-  }
+  const name = data?.name;
+  const restAddress = data
+    ? {line1: data.line1, city: data.city, postal_code: data.postalCode, country: data.country}
+    : undefined;
   // Mark payment element as ready when elements exist
   useEffect(() => {
     if (elements && activeStep === 1) {
@@ -154,8 +152,14 @@ export default function CheckoutStepper() {
     const addressElement = elements?.getElement('address');
     if(!addressElement) return null;
     const {value: {name,address}} = await addressElement.getValue();
-  
-    if (name && address) return {...address,name}
+
+    if (name && address) return {
+      name,
+      line1: address.line1,
+      city: address.city,
+      postalCode: address.postal_code,
+      country: address.country
+    }
 
     return null;
   }
@@ -175,7 +179,7 @@ export default function CheckoutStepper() {
   
   if (isLoading) return <Typography variant="h6">Loading checkout...</Typography>
   return (
-    <Paper sx={{p: 3, borderRadious:3}}>
+    <Paper sx={{p: 3, borderRadius:3}}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index)=>{
           return(

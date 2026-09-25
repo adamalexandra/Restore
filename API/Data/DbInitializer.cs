@@ -1,8 +1,4 @@
-using System;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using Microsoft.Extensions.WebEncoders.Testing;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -19,12 +15,7 @@ public class DbInitializer
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
       ?? throw new InvalidOperationException("Failed to retrieve user manager");
     
-     SeedDataAsync(context, userManager).GetAwaiter().GetResult(); //instead of await
-  }
-
-  private static void SeedData(StoreContext context, object userManger)
-  {
-    throw new NotImplementedException();
+    await SeedDataAsync(context, userManager);
   }
 
   private static async Task SeedDataAsync(StoreContext context, UserManager<User>userManager)
@@ -36,7 +27,8 @@ public class DbInitializer
       var user = new User
       {
         UserName = "bob@test.com",
-        Email = "bob@test.com"
+        Email = "bob@test.com",
+        Name = "Bob"
       };
       await userManager.CreateAsync(user, "Pa$$w0rd");
       await userManager.AddToRoleAsync(user, "Member");
@@ -44,7 +36,8 @@ public class DbInitializer
       var admin = new User
       {
         UserName = "admin@test.com",
-        Email = "admin@test.com"
+        Email = "admin@test.com",
+        Name = "Admin"
       };
       await userManager.CreateAsync(admin, "Pa$$w0rd");
       await userManager.AddToRolesAsync(admin, ["Member", "Admin"]);

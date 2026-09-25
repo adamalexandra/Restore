@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json;
 using API.RequestHelpers;
 using Microsoft.Net.Http.Headers;

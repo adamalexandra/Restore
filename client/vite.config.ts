@@ -6,8 +6,18 @@ import mkcert from "vite-plugin-mkcert";
 export default defineConfig({
   build:{
     outDir:'../API/wwwroot',
-    chunkSizeWarningLimit:1029,
-    emptyOutDir:true
+    emptyOutDir:true,
+    rollupOptions:{
+      output:{
+        manualChunks:{
+          react:['react','react-dom','react-router-dom'],
+          mui:['@mui/material','@mui/icons-material','@mui/lab'],
+          redux:['@reduxjs/toolkit','react-redux'],
+          stripe:['@stripe/stripe-js','@stripe/react-stripe-js'],
+          forms:['react-hook-form','@hookform/resolvers','zod']
+        }
+      }
+    }
   },
   server: {
     port: 3000,

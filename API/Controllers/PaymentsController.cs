@@ -1,9 +1,8 @@
-using System;
 using API.Data;
 using API.DTOs;
 using API.Entities.OrderAggregate;
-using API.Extentions;
-using API.Servieces;
+using API.Extensions;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,7 @@ public class PaymentsController(PaymentsService paymentsService,
   [HttpPost]
   public async Task<ActionResult<BasketDto>> CreateOrUpdatePaymentIntent()
   {
-    var basket = await context.Baskets.GetBasketWithItemss(Request.Cookies["basketId"]);
+    var basket = await context.Baskets.GetBasketWithItems(Request.Cookies["basketId"]);
 
     if (basket == null) return BadRequest("Problem with the basket");
 

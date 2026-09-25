@@ -1,7 +1,19 @@
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Entities;
 
+[Owned]
+public class AppCoupon
+{
+  public required string Name {get; set;}
+  public long? AmountOff {get; set;}
+
+  [Precision(5,2)]
+  public decimal? PercentOff {get; set;}
+  public required string PromotionCode {get; set;}
+  public required string CouponId {get; set;}
+}
 public class Basket
 {
   public int Id { get; set; }
@@ -9,6 +21,7 @@ public class Basket
   public List<BasketItem> Items { get; set;}=[];
   public string? ClientSecret { get; set;}
   public string? PaymentIntentId { get; set;}
+  public AppCoupon? Coupon {get; set;}
   public void AddItem(Product product, int quantity)
   {
     if (product == null) ArgumentNullException.ThrowIfNull(product);

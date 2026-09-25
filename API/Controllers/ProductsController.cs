@@ -3,8 +3,7 @@ using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.RequestHelpers;
-using API.Servieces;
-using AutoMapper;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
   
-    public class ProductsController(StoreContext context, IMapper mapper, 
+    public class ProductsController(StoreContext context,
         ImageService imageService) : BaseApiController
     {
         [HttpGet]   //api/products
@@ -56,7 +55,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>>CreateProduct(CreateProductDto productDto)
         {
-            var product = mapper.Map<Product>(productDto);
+            var product = productDto.ToEntity();
 
             if (productDto.File!= null)
             {
@@ -88,7 +87,7 @@ namespace API.Controllers
 
             if (product == null) return NotFound();
 
-            mapper.Map(updateProductDto, product);
+            updateProductDto.ApplyTo(product);
 
             if (updateProductDto.File != null)
             {

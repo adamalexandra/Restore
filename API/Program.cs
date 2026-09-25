@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using API.Entities;
 using API.Middleware;
 using Microsoft.AspNetCore.Identity;
-using API.Servieces;
-using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
+using API.Services;
 using API.RequestHelpers;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddControllers();
+
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
   opt.UseSqlServer(
@@ -26,10 +26,27 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     });
 });
 builder.Services.AddCors();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddScoped<PaymentsService>();
 builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<DiscountService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+// Configure data protection for persistent key storage
+builder.Services.AddDataProtection()
+  .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "keys")));
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+  options.Events.OnRedirectToLogin = context =>
+  {
+    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+    return Task.CompletedTask;
+  };
+  options.Cookie.SameSite = SameSiteMode.None;
+  options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+
 builder.Services.AddIdentityApiEndpoints<User>(opt => {
   opt.User.RequireUniqueEmail = true;
 }).AddRoles<IdentityRole>().AddEntityFrameworkStores<StoreContext>();
