@@ -8,7 +8,7 @@ export default function HomePage() {
       justifyContent='center' position='relative'>
         <img
         src="/images-candles/images/frontpage-candles.jpg" 
-        alt="candles image"
+        alt="Frontpage Candles"
         style={{
           position:'absolute',
           inset: 0,
@@ -42,7 +42,7 @@ export default function HomePage() {
           to='/catalog'
           sx={{
             mt:8,
-            backgroundImage:'linear-gradient(to right,##814043, #814043',
+            backgroundImage:'linear-gradient(to right,#814043, #814043',
             fontWeight:'bold',
             color:'#fff4ef',
             borderRadius:'16px',

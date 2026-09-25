@@ -17,7 +17,7 @@ export interface ShippingAddress{
   line1:string
   line2?:string | null
   city:string
-  postal_code: string
+  postalCode: string
   country:string
 }
 

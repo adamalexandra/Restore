@@ -11,7 +11,6 @@ public class UpdateProductDto
 
   [Required]
   public string Description { get; set; } = string.Empty;
-  public long MyProperty { get; set; }
 
   public IFormFile? File { get; set; } //object not a string
 

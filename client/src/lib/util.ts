@@ -17,7 +17,7 @@ export function filterEmptyValues (values: object) {
 
 export const formatAddressString=(address:ShippingAddress) =>{
   return `${address?.name}, ${address?.line1}, ${address?.city},
-    ${address?.postal_code}, ${address?.country}`
+    ${address?.postalCode}, ${address?.country}`
 }
 
 export const formatPaymentString=(card:PaymentSummary)=>{

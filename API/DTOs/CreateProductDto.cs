@@ -10,7 +10,6 @@ public class CreateProductDto
 
   [Required]
   public string Description { get; set; } = string.Empty;
-  public long MyProperty { get; set; }
 
   [Required]
   public IFormFile File { get; set; } = null!; //object not a string
